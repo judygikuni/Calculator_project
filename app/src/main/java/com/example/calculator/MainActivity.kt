@@ -44,34 +44,49 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         btnAdd.setOnClickListener {
-            var num1 = etNum1.text.toString()
-            var num2 = etNum2.text.toString()
-
-            var sum = num1.toInt() + num2.toInt()
-            tvResult.text = sum.toString()
+            obtainValues("+").toString()
         }
         btnSubtract.setOnClickListener {
-            var num1 = etNum2.text.toString()
-            var num2 = etNum2.text.toString()
-
-            var subtract = num1.toInt() - num2.toInt()
-            tvResult.text = subtract.toString()
+            obtainValues("-").toString()
         }
 
         btnDivide.setOnClickListener {
-            var num1 = etNum1.text.toString()
-            var num2 = etNum2.text.toString()
-
-            var division = num1.toInt() / num2.toInt()
-            tvResult.text = division.toString()
+             obtainValues("/").toString()
         }
 
         btnMultiply.setOnClickListener {
-            var num1 = etNum1.text.toString()
-            var num2 = etNum2.text.toString()
 
-            var multiple = num1.toInt() * num2.toInt()
-            tvResult.text=multiple.toString()
+           obtainValues("*").toString()
         }
+    }
+
+    fun obtainValues(symbol:String){
+       val num1 = etNum1.text.toString()
+        val num2 = etNum2.text.toString()
+
+        if(num1.isBlank()){
+            etNum1.error = "Num 1 is required"
+            return
+        }
+
+        if(num2.isBlank()){
+            etNum2.error = "Num 2 is require"
+            return
+        }
+
+        performCalculation(symbol,num1,num2)
+    }
+
+
+    fun performCalculation(symbol: String, num1:String, num2:String) {
+        val result =  when (symbol) {
+            "+" -> num1.toDouble() + num2.toInt()
+            "-" -> num1.toDouble() - num2.toInt()
+            "*" -> num1.toDouble() * num2.toInt()
+            "/" -> num1.toDouble() / num2.toInt()
+            else -> 0.0
+        }
+
+        tvResult.text = result.toString()
     }
 }
